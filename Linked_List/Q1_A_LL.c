@@ -8,7 +8,6 @@ Purpose: Implementing the required functions for Question 1 */
 
 #include <stdio.h>
 #include <stdlib.h>
-//주석
 //////////////////////////////////////////////////////////////////////////////////
 
 typedef struct _listnode{
@@ -90,13 +89,43 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	/*  
+	오름차순으로 Node insert 후, 추가된 index 반환 
+	이미 존재하는 수라면 -1 
+	주어진 LL은 sorted 거나 empty LL로 가정한다.
+	*/
+
+	// 리스트가 아예 존재하지 않는 경우 -1 리턴
+	if (ll==NULL) return -1; 
+
+	ListNode *cur = ll->head; //리스트노드 포인터 cur 변수
+	int index = 0;
+	
+	// 빈 리스트면 0번 인덱스에 삽입
+	if (cur==NULL){
+		insertNode(ll,0,item);
+		return 0;
+	}
+	
+	//삽입 위치 탐색 
+	while (cur !=NULL){
+		if (cur->item==item)
+			return -1; //이미 있던 값이면 -1 리턴
+		if (cur->item > item)
+			break; //다음 원소가 더 커지는 순간 종료
+		cur = cur->next;
+		index++;
+	}
+
+	insertNode(ll,index,item);
+	return index;
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
 
 void printList(LinkedList *ll){
-
+	//순서대로 노드 출력
 	ListNode *cur;
 	if (ll == NULL)
 		return;
@@ -159,10 +188,14 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	// If empty list or inserting first node, need to update head pointer
 	if (ll->head == NULL || index == 0){
-		cur = ll->head;
+		cur = ll->head; // CUR= NULL
 		ll->head = malloc(sizeof(ListNode));
 		ll->head->item = value;
-		ll->head->next = cur;
+		ll->head->next = cur; 
+		/*빈 리스트인 경우 LL->HEAD->NEXT = NULL 이지만
+		 앞에 노드가 있을때 첫 노드로 삽입하는 경우 
+		 ll->head->next = 기존 첫 노드임
+		*/
 		ll->size++;
 		return 0;
 	}
@@ -170,6 +203,7 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	// Find the nodes before and at the target position
 	// Create a new node and reconnect the links
+	//삽입은 항상 "앞 노드의 next를 조정"하므로 앞 노드가 필요하다
 	if ((pre = findNode(ll, index - 1)) != NULL){
 		cur = pre->next;
 		pre->next = malloc(sizeof(ListNode));
@@ -192,9 +226,12 @@ int removeNode(LinkedList *ll, int index){
 		return -1;
 
 	// If removing first node, need to update head pointer
+	/*
+	노드가 하나만 있는경우나,여러개 노드중 첫 노드삭제인 경우도 적용
+	*/
 	if (index == 0){
-		cur = ll->head->next;
-		free(ll->head);
+		cur = ll->head->next; 
+		free(ll->head); 
 		ll->head = cur;
 		ll->size--;
 
