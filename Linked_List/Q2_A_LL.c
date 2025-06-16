@@ -103,7 +103,46 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+    /* 
+	if LL1 길이 >= LL2 길이 : L1에 합병 후 L2는 empty
+	if LL1 길이 < LL2  길이 : L1에 합병 후 L2는 남음
+	alternate position이 존재할때만 삽입 가능
+	*/
+
+	ListNode *cur1= ll1->head;
+	ListNode *cur2 = ll2->head;
+	ListNode *temp1, *temp2;
+
+	if ((ll1 || ll2) == NULL) //Linked_List 자체가없는경우
+		return;
+
+	if (ll1->head == NULL) //LL1이 빈 경우
+		return;
+
+	if (ll2->head == NULL) // LL2가 빈 경우
+		return;
+
+	while (cur1 !=NULL && cur2 !=NULL){
+		//나중에 뒤쪽 포인터 연결이 필요하므로 temp에 저장
+		
+		temp1=  cur1->next; // LL1의 다음 노드 저장
+		temp2 = cur2->next; // LL2의 다음 노드 저장
+		
+		cur1->next=cur2; // LL1에 LL2를 연결
+		cur2->next = temp1; //이후의 LL1 다시 연결
+
+		ll1->size ++;
+
+		ll2->size --;
+
+		//다음 위치로 이동
+		cur1 = temp1;
+		cur2 = temp2;
+
+	}
+	
+	// LL2는 ,남아있는 노드부터 시작
+	ll2 -> head =temp2 ; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

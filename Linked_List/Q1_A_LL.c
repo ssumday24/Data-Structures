@@ -114,9 +114,10 @@ int insertSortedLL(LinkedList *ll, int item)
 		if (cur->item > item)
 			break; //다음 원소가 더 커지는 순간 종료
 		cur = cur->next;
-		index++;
+		index++; 
 	}
 
+	//위의 while문에서 삽입 index 계산후, insert
 	insertNode(ll,index,item);
 	return index;
 
