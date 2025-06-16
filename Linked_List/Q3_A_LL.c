@@ -105,7 +105,7 @@ void moveOddItemsToBack(LinkedList *ll)
 			insertNode(ll,ll->size,value); //리스트 끝에 insert
 			// 같은 인덱스 자리에 다음노드가 위치
 			cur = findNode(ll,index); 
-
+			//cur= cur ->next 를 쓰면 안됨
 		} 
 		else //짝수일때는 다음 노드로 이동
 		{

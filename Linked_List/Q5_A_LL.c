@@ -103,7 +103,37 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	/* 홀수길이일 경우, front에 하나더 추가*/
+	
+	if (ll==NULL || ll->head ==NULL) return;
+
+	//BACK 리스트의 시작 지점 인덱스인 start
+	int start = (ll->size +1) / 2 ; 
+	ListNode* cur = ll->head;
+	ListNode* prev = NULL; // cur의 이전을 가리키는 prev
+
+	for (int i=0; i<start; i++)
+	{
+		prev = cur;		 // prev는 항상 cur의 이전 노드를 가리킴
+		cur = cur->next; // START번 만큼 이동
+	}	
+	
+	if (prev != NULL)
+		prev-> next = NULL ; // Front 와 Back 리스트 분리
+
+	resultFrontList->head = ll->head;
+	//front의 size 는 start와 같음
+	resultFrontList->size = start; 
+ 
+	//cur 에 저장해둔 주소 넣기
+	resultBackList->head = cur; 
+	//back의 size는 원본에서 front의 size 뺀것
+	resultBackList->size = ll->size - start; 
+
+	//원본 LL 초기화
+	ll->head = NULL;
+	ll->size = 0;
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
