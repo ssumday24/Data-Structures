@@ -117,6 +117,19 @@ int main()
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
 	/* add your code here */
+	//가장 먼저 큐를 비우기
+	removeAllItemsFromQueue(q);
+
+	ListNode* cur = ll->head;
+	
+	while (cur !=NULL)
+	{
+		enqueue(q,cur->item); //큐에 노드 enqueue
+		cur = cur->next;
+
+	}
+
+
 }
 
 void removeOddValues(Queue *q)
@@ -212,7 +225,7 @@ ListNode * findNode(LinkedList *ll, int index){
 
 	return temp;
 }
-
+//enqueue : insertNode(&(q->ll), q->ll.size, item)
 int insertNode(LinkedList *ll, int index, int value){
 
 	ListNode *pre, *cur;

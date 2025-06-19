@@ -86,29 +86,36 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	// 홀수 노드를 제거후, 마지막 노드에 이어붙이기
+	// 홀수 노드를 제거 후, 리스트 맨뒤로 이동
 
-	// 연결리스트가 비어있을때
+	// 연결리스트가 존재하지 않을 때
 	if (ll==NULL || ll->head == NULL) return;
 
-	int index = 0;
+	int index = 0; // 인덱스 추적용 변수 
 	ListNode* cur = ll->head;
 	int original_size = ll->size; // 리스트의 원래크기
 
-	for (int i=0;i<original_size; i++)
+	for ( int i=0 ; i< original_size; i++ )
 	{
-		if (cur==NULL) break; // 마지막까지 탐색했으면 종료
+
 		if (cur->item %2 == 1) 
 		{
 			int value = cur -> item;
+			
+			//홀수 노드를 제거하고 free()
 			removeNode(ll,index);
-			insertNode(ll,ll->size,value); //리스트 끝에 insert
-			// 같은 인덱스 자리에 다음노드가 위치
+			
+			//리스트 끝에 insert
+			insertNode(ll,ll->size,value); 
+			
+			//cur= cur ->next (X)
 			cur = findNode(ll,index); 
-			//cur= cur ->next 를 쓰면 안됨
+		
 		} 
-		else //짝수일때는 다음 노드로 이동
-		{
+
+		//짝수일때 다음 노드로 이동
+		else
+		{ 
 			index ++;
 			cur = cur-> next;
 		}

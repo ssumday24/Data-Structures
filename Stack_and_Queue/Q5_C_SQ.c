@@ -109,7 +109,19 @@ int main()
 
 void recursiveReverse(Queue *q)
 {
-/* add your code here */
+	/* add your code here */
+	// 큐가 비었을때 더이상 처리할게 없으니 Base case
+	if ((q->ll).head==NULL) 
+		return;
+
+	//임시변수에 디큐된 원소 저장
+	int temp =dequeue(q); 
+	
+	//재귀 호출
+	recursiveReverse(q);
+
+	enqueue(q,temp);
+
 }
 
 //////////////////////////////////////////////////////////////////

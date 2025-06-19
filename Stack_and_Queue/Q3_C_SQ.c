@@ -82,7 +82,7 @@ int main()
             {
                 printf("The stack is pairwise consecutive.\n");
             }
-            else{
+            else{ //함수 RETURN 값 ==0
                 printf("The stack is not pairwise consecutive.\n");
             }
             removeAllItems(&(s.ll));
@@ -104,6 +104,25 @@ int main()
 int isStackPairwiseConsecutive(Stack *s)
 {
   /* add your code here */
+
+	int size = (s->ll).size; //스택의 size
+	
+	if (size %2 ==1) return 0; // stack size가 홀수면 X
+
+	for (int i=0; i< size/2 ; i++) //  (size/2)만큼 반복
+	{
+		int left = pop(s);
+		int right = pop(s); //두번씩 팝하기
+
+		if ( right == (left -1 ) || right == (left + 1))
+			continue; // pair면 계속 진행
+
+		else
+			return 0; // pair가 아니면 바로 return False 
+	
+
+	}
+	return 1; // return True
 }
 
 //////////////////////////////////////////////////////////////////////////////////

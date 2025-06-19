@@ -111,7 +111,10 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	if (!isEmptyStack(s) && peek(s) != value)
+	{	pop(s); //스택이 비어있지 않고 top이 value가 아닌동안
+	}
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

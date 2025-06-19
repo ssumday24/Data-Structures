@@ -112,7 +112,30 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	/* add your code here */
+	
+
+
+	// 스택을 사용해 큐를 거꾸로 바꾸기
+	Stack* s = malloc(sizeof(Stack));
+	s->ll.size =0;
+	s->ll.head=NULL;
+
+	int origin_size =(q->ll).size; //원본 큐의 size 저장 
+	 
+	while ((q->ll).head != NULL) //큐가 빌때까지 반복
+	{
+		//큐에서 제거한 원소를 바로 스택에 추가
+		push(s,dequeue(q));
+	}
+
+	for (int i=0; i<origin_size;i++)
+	{
+		enqueue(q,pop(s)); //스택에서 pop되는 원소들 차례로 push
+	}
+
+	//Stack s 는 더이상 필요하지 않으니 메모리 해제
+	free(s);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
