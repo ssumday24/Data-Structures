@@ -71,7 +71,7 @@ int main()
                 printf("Creating tree1:\n");
                 root1 = createTree();
                 printf("The resulting tree1 is: ");
-                printTree(root1);
+                printTree(root1); //중위순회로 출력
                 printf("\n");
                 break;
             case 2:
@@ -79,7 +79,7 @@ int main()
                 printf("Creating tree2:\n");
                 root2 = createTree();
                 printf("The resulting tree2 is: ");
-                printTree(root2);
+                printTree(root2); //중위순회로 출력
                 printf("\n");
                 break;
             case 3:
@@ -116,7 +116,23 @@ int main()
 int identical(BTNode *tree1, BTNode *tree2)
 
 {
-   /* add your code here */
+   //구조적으로 동일하면 1 반환 / 아니면 0반환. 
+
+    //리프 노드에서의 탈출조건, 둘다 모두 NULL일때
+    if (tree1 ==NULL && tree2 ==NULL) return 1;
+
+    if (tree1 ==NULL || tree2 == NULL) return 0;
+
+    //어떻게 재귀없이 모든 노드를 순회할까?
+    if (identical(tree1->left,tree2->left) ==0)
+        return 0;
+            
+    if(identical(tree1->right,tree2->right)==0)
+        return 0;
+    
+    return 1; //안걸렸으면 true 반환
+
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -131,8 +147,8 @@ BTNode *createBTNode(int item){
 
 //////////////////////////////////////////////////////////////////////////////////
 
-
-BTNode *createTree()
+//push,pop은 Create Tree를 재귀없이 구현하기 위해서만 쓰임
+BTNode *createTree() 
 {
     Stack stk;
     BTNode *root, *temp;
@@ -149,11 +165,11 @@ BTNode *createTree()
         root = createBTNode(item);
         push(&stk,root);
     }
-    else
+    else // 숫자가 아니라 문자일때
     {
         scanf("%c",&s);
     }
-
+    //스택에서 push,pop은 연결리스트의 0번원소에서만 진행해도 됨
     while((temp =pop(&stk)) != NULL)
     {
 
@@ -165,7 +181,7 @@ BTNode *createTree()
         }
         else
         {
-            scanf("%c",&s);
+            scanf("%c",&s);  // 문자 입력: 버퍼에서 문자 제거 (버림)
         }
 
         printf("Enter an integer value for the Right child of %d: ", temp->item);
@@ -175,9 +191,11 @@ BTNode *createTree()
         }
         else
         {
-            scanf("%c",&s);
+            scanf("%c",&s);  // 문자 입력: 버퍼에서 문자 제거 (버림)
         }
 
+        //오른쪽 자식을 먼저 push 하고, 
+        //왼쪽 자식을 나중에 push한다.
         if(temp->right != NULL)
             push(&stk,temp->right);
         if(temp->left != NULL)
@@ -219,7 +237,7 @@ BTNode* pop(Stack *stk){
    }
    return ptr;
 }
-
+//중위 순회로 출력 (재귀)
 void printTree(BTNode *node){
     if(node == NULL) return;
 

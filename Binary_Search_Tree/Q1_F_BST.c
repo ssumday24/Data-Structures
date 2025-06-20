@@ -91,10 +91,29 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void levelOrderTraversal(BSTNode* root)
+void levelOrderTraversal(BSTNode* root) //-> 사실 BFS문제 
 {
+	//레벨순서로 순회 -> 큐를 쓰는 BFS이므로 재귀사용 X
+	if (root ==NULL)
+		return;  //트리가 비었을때
+	
+	QueueNode* head = NULL; // 여기서 head는 "큐의 첫번째 원소" 를 가리킴
+	QueueNode* tail = NULL; //큐의 head 와 tail 추적용 포인터
+	enqueue(&head,&tail,root); //인자로 이중포인터 head,tail
 
-    /* add your code here */
+	while (head!=NULL)
+	{
+		
+        BSTNode* current = dequeue(&head, &tail); // 현재 노드 꺼내기
+        printf("%d ", current->item); // 출력 (레벨순)
+
+        if (current->left != NULL)
+            enqueue(&head, &tail, current->left);
+        if (current->right != NULL)
+            enqueue(&head, &tail, current->right);
+	}
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -165,7 +184,7 @@ BSTNode* dequeue(QueueNode **headPtr, QueueNode **tailPtr)
 
 	free(tempPtr);
 
-	return node;
+	return node; //큐의 첫번째 원소 반환
 }
 
 int isEmpty(QueueNode *head)

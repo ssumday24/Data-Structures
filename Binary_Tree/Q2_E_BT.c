@@ -95,9 +95,26 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int maxHeight(BTNode *node)
-
 {
-    /* add your code here */
+    //노드는 루트부터 시작, 비어있다면 높이: -1
+    //노드가 비어있을때 -1 (루트에도 적용) - 재귀 종료조건
+    if(node == NULL)
+        return -1;
+
+    // 높이 정보를 다음 함수에 어떻게 전달해야하지?
+    // global 선언할까
+    // 원본 함수의 반복으로 처리? 
+
+    int l_height = maxHeight(node->left);
+    int r_height= maxHeight(node->right);
+
+    //만약 루드만 있을때에도 NULL >= NULL 이니 return (-1+1)반환
+    if (l_height >= r_height) 
+        return l_height+1; //높이가 1씩 더해져감
+    else
+        return r_height+1;
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
